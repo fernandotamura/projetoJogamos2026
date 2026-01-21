@@ -1,0 +1,36 @@
+#:import dp kivy.metrics.dp
+#:import FocusBehavior kivy.uix.behaviors.focus
+
+# ---------- Campo de texto padrão (reutilizado para e-mail) ----------
+<AuthTextField@MDTextField>:
+    size_hint_y: None
+    height: dp(68)
+    mode: "rectangle"
+    helper_text_mode: "on_error"
+    hint_text_color_normal: app.theme_cls.primary_color
+    multiline: False
+    write_tab: False
+
+# ---------- Botão padrão ----------
+<AuthPrimaryButton@MDRaisedButton>:
+    size_hint_y: None
+    height: dp(46)
+    md_bg_color: app.theme_cls.primary_color
+    text_color: 1, 1, 1, 1
+
+# ---------- Botão focável (TAB chega ao botão) ----------
+<FocusPrimaryButton@FocusBehavior+MDRaisedButton>:
+    size_hint_y: None
+    height: dp(46)
+    md_bg_color: app.theme_cls.primary_color
+    text_color: 1, 1, 1, 1
+
+# ---------- Rótulos ----------
+<Headline@MDLabel>:
+    font_style: "H5"
+    halign: "left"
+
+<Subtle@MDLabel>:
+    theme_text_color: "Secondary"
+    font_size: "12sp"
+    halign: "left"

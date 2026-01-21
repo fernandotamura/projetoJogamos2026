@@ -1,0 +1,20 @@
+#:import dp kivy.metrics.dp
+
+<HomeScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "Home"
+            left_action_items: [["arrow-left", lambda x: root.go_logout()]]
+            right_action_items: [["theme-light-dark", lambda x: root.toggle_theme()]]
+
+        MDBoxLayout:
+            orientation: "vertical"
+            padding: dp(20)
+            spacing: dp(12)
+
+            MDLabel:
+                text: "Você está logado!\nUse o ícone à direita para alternar Light/Dark."
+                halign: "center"
+                font_style: "H6"

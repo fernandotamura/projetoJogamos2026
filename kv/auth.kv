@@ -1,0 +1,248 @@
+#:import dp kivy.metrics.dp
+
+<LoginScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: dp(20)
+        spacing: dp(12)
+        size_hint_x: None
+        width: min(root.width, dp(440))
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        Headline:
+            text: "Bem-vindo"
+        Subtle:
+            text: "Faça login para continuar."
+
+        AuthTextField:
+            id: email_input
+            hint_text: "E-mail"
+            icon_right: "email-outline"
+            focus_next: password_input
+            on_text_validate: password_input.focus = True
+
+        # --- Campo de senha com ícone "olho" (toggle) ---
+        MDRelativeLayout:
+            size_hint_y: None
+            height: dp(68)
+
+            MDTextField:
+                id: password_input
+                hint_text: "Senha"
+                mode: "rectangle"
+                multiline: False
+                write_tab: False
+                password: True
+                size_hint_y: None
+                height: dp(68)
+                pos_hint: {"center_y": 0.5}
+                focus_next: login_btn
+                focus_previous: email_input
+                on_text_validate: root.do_login(email_input.text.strip(), password_input.text)
+
+            MDIconButton:
+                id: eye_btn_login
+                icon: "eye-off" if password_input.password else "eye"
+                pos_hint: {"center_y": 0.5}
+                theme_icon_color: "Custom"
+                icon_color: app.theme_cls.primary_color
+                x: password_input.x + password_input.width - self.width - dp(8)
+                on_release:
+                    password_input.password = not password_input.password
+                    self.icon = "eye-off" if password_input.password else "eye"
+
+        # Botão focável (TAB chega nele)
+        FocusPrimaryButton:
+            id: login_btn
+            text: "Entrar"
+            on_release: root.do_login(email_input.text.strip(), password_input.text)
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            spacing: dp(8)
+            MDWidget:
+            MDTextButton:
+                text: "Esqueci minha senha"
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
+                on_release: root.manager.current = "forgot"
+            MDTextButton:
+                text: "Criar conta"
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
+                on_release: root.manager.current = "signup"
+            MDWidget:
+
+
+<SignupScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: dp(20)
+        spacing: dp(12)
+        size_hint_x: None
+        width: min(root.width, dp(440))
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        Headline:
+            text: "Criar conta"
+
+        AuthTextField:
+            id: signup_email_input
+            hint_text: "E-mail"
+            icon_right: "email-outline"
+            focus_next: signup_password_input
+            on_text_validate: signup_password_input.focus = True
+
+        # --- Campo Senha com "olho" ---
+        MDRelativeLayout:
+            size_hint_y: None
+            height: dp(68)
+
+            MDTextField:
+                id: signup_password_input
+                hint_text: "Senha"
+                mode: "rectangle"
+                multiline: False
+                write_tab: False
+                password: True
+                size_hint_y: None
+                height: dp(68)
+                pos_hint: {"center_y": 0.5}
+                focus_next: signup_confirm_input
+                focus_previous: signup_email_input
+                on_text_validate: signup_confirm_input.focus = True
+
+            MDIconButton:
+                id: eye_btn_signup_pwd
+                icon: "eye-off" if signup_password_input.password else "eye"
+                pos_hint: {"center_y": 0.5}
+                theme_icon_color: "Custom"
+                icon_color: app.theme_cls.primary_color
+                x: signup_password_input.x + signup_password_input.width - self.width - dp(8)
+                on_release:
+                    signup_password_input.password = not signup_password_input.password
+                    self.icon = "eye-off" if signup_password_input.password else "eye"
+
+        # --- Campo Confirmar senha com "olho" ---
+        MDRelativeLayout:
+            size_hint_y: None
+            height: dp(68)
+
+            MDTextField:
+                id: signup_confirm_input
+                hint_text: "Confirmar senha"
+                mode: "rectangle"
+                multiline: False
+                write_tab: False
+                password: True
+                size_hint_y: None
+                height: dp(68)
+                pos_hint: {"center_y": 0.5}
+                focus_next: signup_create_btn
+                focus_previous: signup_password_input
+                on_text_validate: root.create_account(signup_email_input.text.strip(), signup_password_input.text, signup_confirm_input.text)
+
+            MDIconButton:
+                id: eye_btn_signup_confirm
+                icon: "eye-off" if signup_confirm_input.password else "eye"
+                pos_hint: {"center_y": 0.5}
+                theme_icon_color: "Custom"
+                icon_color: app.theme_cls.primary_color
+                x: signup_confirm_input.x + signup_confirm_input.width - self.width - dp(8)
+                on_release:
+                    signup_confirm_input.password = not signup_confirm_input.password
+                    self.icon = "eye-off" if signup_confirm_input.password else "eye"
+
+        # Botão focável
+        FocusPrimaryButton:
+            id: signup_create_btn
+            text: "Criar conta"
+            on_release: root.create_account(signup_email_input.text.strip(), signup_password_input.text, signup_confirm_input.text)
+
+        MDTextButton:
+            text: "Já tenho conta — voltar ao login"
+            halign: "center"
+            theme_text_color: "Custom"
+            text_color: app.theme_cls.primary_color
+            on_release: app.root.current = "login"
+
+
+<ForgotPasswordScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: dp(20)
+        spacing: dp(12)
+        size_hint_x: None
+        width: min(root.width, dp(440))
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        Headline:
+            text: "Recuperar senha"
+        Subtle:
+            text: "Informe seu e-mail para receber instruções."
+
+        AuthTextField:
+            id: forgot_email_input
+            hint_text: "E-mail cadastrado"
+            icon_right: "email-outline"
+            focus_next: forgot_send_btn
+            on_text_validate: forgot_send_btn.focus = True
+
+        # Botão focável
+        FocusPrimaryButton:
+            id: forgot_send_btn
+            text: "Enviar"
+            on_release: root.send_reset(forgot_email_input.text.strip())
+
+        MDTextButton:
+            text: "Voltar ao login"
+            halign: "center"
+            theme_text_color: "Custom"
+            text_color: app.theme_cls.primary_color
+            on_release: app.root.current = "login"
+
+
+<VerifyTokenScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: dp(20)
+        spacing: dp(12)
+        size_hint_x: None
+        width: min(root.width, dp(440))
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        Headline:
+            text: "Verificar e-mail"
+        Subtle:
+            text: "Enviamos um token para " + root.email
+
+        AuthTextField:
+            id: token_input
+            hint_text: "Token recebido por e-mail"
+            icon_right: "numeric"
+            focus_next: verify_btn
+            on_text_validate: root.verify_token(token_input.text.strip())
+
+        # Botão focável
+        FocusPrimaryButton:
+            id: verify_btn
+            text: "Validar token"
+            on_release: root.verify_token(token_input.text.strip())
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            spacing: dp(8)
+            MDWidget:
+            MDTextButton:
+                text: "Reenviar token"
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
+                on_release: root.resend_token()
+            MDTextButton:
+                text: "Voltar ao login"
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
+                on_release: app.root.current = "login"
+            MDWidget:
