@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Jogamos — Login</title>
+
+    <!-- Linka o CSS do tema -->
+    <link rel="stylesheet" href="login-skin-jogamos.css" />
+</head>
+
+<body>
+
+    <div class="login-wrap">
+        <!-- Logo + título -->
+        <div class="brand" style="display:flex;align-items:center;gap:10px;margin:8px 0 20px;">
+            <!-- Troque pelo seu SVG/PNG -->
+            <img src="https://via.placeholder.com/96x32?text=J" alt="Jogamos logo" height="32" />
+            <div class="name" style="font-weight:700;">jogamos</div>
+        </div>
+
+        <h1 class="login-title">Login</h1>
+        <p class="login-subtitle">
+            Estamos muito felizes que você voltou. Entre com seu e‑mail e sua senha ou com suas redes sociais
+        </p>
+
+        <!-- Formulário (IDs que você já usa) -->
+        <form id="loginForm" onsubmit="return false;">
+            <label class="field">
+                <span style="display:block;font-size:14px;color:#8E8E8E;margin-bottom:6px;">E‑mail</span>
+                <input id="email" type="email" placeholder="E‑mail" required />
+            </label>
+
+            <label class="field" style="margin-top:14px;">
+                <span style="display:block;font-size:14px;color:#8E8E8E;margin-bottom:6px;">Senha</span>
+                <div class="passwrap">
+                    <input id="password" type="password" placeholder="Senha" required />
+                    <button class="eye-btn" type="button" aria-label="Mostrar/ocultar senha">👁️</button>
+                </div>
+            </label>
+
+            <!-- CTA principal -->
+            <button id="login_btn" type="submit">Login</button>
+
+            <!-- Mensagem (opcional) -->
+            <p id="loginMsg" class="msg" style="margin-top:10px;"></p>
+        </form>
+
+        <!-- Divisor -->
+        <div class="sp-20"></div>
+        <div class="divider">ou</div>
+        <div class="sp-16"></div>
+
+        <!-- Botões sociais (Google, Facebook, Apple) -->
+        <div class="social-list">
+
+            <!-- Google -->
+            <button type="button" class="social-btn google" id="btn_google">
+                <div class="ico" aria-hidden="true">
+                    <!-- Ícone monocromático temporário -->
+                    <svg width="20" height="20" viewBox="0 0 48 48" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg"
+                        role="img" aria-label="Google">
+                        <path
+                            d="M44.5 20H24v8.5h11.8C34.9 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6-6C34.9 4.5 29.7 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.1-2.2-.5-4z" />
+                    </svg>
+                </div>
+                <div class="label">Continue com o Google</div>
+            </button>
+
+            <!-- Facebook -->
+            <button type="button" class="social-btn facebook" id="btn_facebook">
+                <div class="ico" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg"
+                        role="img" aria-label="Facebook">
+                        <path
+                            d="M22 12.06C22 6.48 17.52 2 12 2S2 6.48 2 12.06c0 5.01 3.66 9.16 8.44 9.94v-7.03H7.9v-2.91h2.54V9.84c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.77-1.61 1.56v1.87h2.73l-.44 2.91h-2.29V22c4.78-.78 8.44-4.93 8.44-9.94z" />
+                    </svg>
+                </div>
+                <div class="label">Continue com o Facebook</div>
+            </button>
+
+            <!-- Apple -->
+            <button type="button" class="social-btn apple" id="btn_apple">
+                <div class="ico" aria-hidden="true">
+                    <!-- Ícone Apple (monocromático) -->
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg"
+                        role="img" aria-label="Apple">
+                        <path
+                            d="M16.365 1.43c0 1.14-.463 2.212-1.21 3.02-.772.841-2.04 1.489-3.087 1.404-.139-1.104.515-2.257 1.26-3.03.797-.826 2.195-1.457 3.037-1.394zM20.86 17.105c-.66 1.524-.973 2.204-1.82 3.558-1.18 1.856-2.844 4.173-4.903 4.19-1.833.018-2.314-1.213-4.32-1.204-2.006.01-2.53 1.217-4.364 1.2-2.06-.018-3.63-2.105-4.81-3.96C-.04 18.842-.722 16.03.52 13.9c1.04-1.75 2.894-2.87 4.906-2.89 1.93-.02 3.15 1.08 4.311 1.08 1.16 0 2.77-1.32 4.67-1.13.796.033 3.04.325 4.476 2.47-.117.073-2.678 1.563-2.024 3.875z" />
+                    </svg>
+                </div>
+                <div class="label">Continue com a Apple</div>
+            </button>
+
+        </div>
+
+        <!-- Link “Cadastrar” (opcional) -->
+        <div class="sp-16"></div>
+        <div class="auth-alt">
+            <a href="#" aria-label="Cadastrar">Cadastrar</a>
+        </div>
+    </div>
+
+    <!-- JS mínimo (olho da senha + placeholders dos botões sociais) -->
+    <script>
+        // Alternância do “olho” da senha
+        (function () {
+            const pwd = document.getElementById('password');
+            const eye = document.querySelector('.eye-btn');
+            if (pwd && eye) {
+                eye.addEventListener('click', () => {
+                    const isHidden = pwd.type === 'password';
+                    pwd.type = isHidden ? 'text' : 'password';
+                    eye.textContent = isHidden ? '🙈' : '👁️';
+                });
+            }
+        })();
+
+        // Submit (apenas visual por enquanto; você conecta ao backend quando quiser)
+        document.getElementById('loginForm').addEventListener('submit', () => {
+            const msg = document.getElementById('loginMsg');
+            msg.textContent = 'Envio do login (exemplo). Integra com seu backend existente.';
+        });
+
+        // Placeholders dos botões sociais (frontend pronto; backend na próxima etapa)
+        document.getElementById('btn_google').addEventListener('click', () => {
+            alert('Google Sign-In (frontend pronto). Próxima etapa: implementar backend OAuth.');
+        });
+        document.getElementById('btn_facebook').addEventListener('click', () => {
+            alert('Facebook Login (frontend pronto). Próxima etapa: implementar backend OAuth.');
+        });
+        document.getElementById('btn_apple').addEventListener('click', () => {
+            alert('Sign in with Apple (frontend pronto). Próxima etapa: implementar backend OAuth.');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,217 @@
+/* Jogamos — Skin de Login (mapeado em #email, #password, #login_btn) */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap");
+
+:root {
+  --brand: #1e3afe; /* CTA */
+  --brand-press: #1025b4;
+  --ink: #111111; /* texto base */
+  --muted: #8e8e8e; /* legendas */
+  --field-border: #dcdcdc; /* borda de campos */
+  --bg: #f6f6f6; /* fundo */
+  --surface: #ffffff; /* cartões/botões sociais */
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --radius-lg: 16px;
+  --radius-pill: 24px;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.login-wrap {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 24px 18px 32px;
+}
+
+h1.login-title {
+  font-family: Poppins, Inter, sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  margin: 12px 0 8px;
+}
+
+p.login-subtitle {
+  margin: 0 0 18px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* Campos mapeados por id */
+#email,
+#password {
+  width: 100%;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-lg);
+  outline: none;
+  font-size: 16px;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s,
+    background-color 0.15s;
+  appearance: none;
+}
+#email::placeholder,
+#password::placeholder {
+  color: #b7b7b7;
+}
+#email:focus,
+#password:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px rgba(30, 58, 254, 0.12);
+}
+
+/* “olho” da senha */
+.passwrap {
+  position: relative;
+}
+.eye-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 36px;
+  width: 40px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  border-radius: 10px;
+  color: #666;
+}
+.eye-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Botão principal mapeado por id */
+#login_btn {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  margin-top: 14px;
+  border-radius: var(--radius-pill);
+  border: 0;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition:
+    filter 0.15s,
+    transform 0.02s;
+}
+#login_btn:hover {
+  filter: brightness(1.04);
+}
+#login_btn:active {
+  transform: translateY(1px);
+}
+
+/* Divider “ou” */
+.divider {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+.divider::before,
+.divider::after {
+  content: "";
+  height: 1px;
+  background: #e7e7e7;
+}
+
+/* Botões sociais (Google / Facebook / Apple) */
+.social-list {
+  display: grid;
+  gap: 12px;
+}
+.social-btn {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: #121212; /* bloco preto */
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: var(--radius-lg);
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: var(--shadow-soft);
+  transition:
+    filter 0.15s,
+    transform 0.02s;
+}
+.social-btn:hover {
+  filter: brightness(1.05);
+}
+.social-btn:active {
+  transform: translateY(1px);
+}
+.social-btn .ico {
+  display: grid;
+  place-items: center;
+  background: #1c1c1c;
+  height: 44px;
+  width: 44px;
+  border-radius: 12px;
+}
+/* especificidades (mantemos preto em todos para seguir o mock) */
+.social-btn.google {
+  background: #121212;
+}
+.social-btn.facebook {
+  background: #121212;
+}
+.social-btn.apple {
+  background: #121212;
+}
+
+/* Link “Cadastrar” */
+.auth-alt {
+  margin-top: 14px;
+  text-align: center;
+}
+.auth-alt a {
+  color: var(--brand);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Espaçadores */
+.sp-16 {
+  height: 16px;
+}
+.sp-20 {
+  height: 20px;
+}
