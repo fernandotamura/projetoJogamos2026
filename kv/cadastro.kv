@@ -1,0 +1,70 @@
+<CadastroScreen>:
+    name: 'cadastro'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 40
+        spacing: 20
+
+        Label:
+            text: 'Cadastro'
+            font_size: 32
+            bold: True
+            size_hint_y: None
+            height: 50
+
+        Label:
+            text: 'Crie sua conta. Leva menos de 1 minuto.'
+            font_size: 16
+            size_hint_y: None
+            height: 30
+
+        TextInput:
+            hint_text: 'Seu nome completo'
+            multiline: False
+
+        TextInput:
+            hint_text: 'E-mail'
+            multiline: False
+
+        TextInput:
+            hint_text: 'Senha'
+            password: True
+            multiline: False
+
+        TextInput:
+            hint_text: 'Confirme a senha'
+            password: True
+            multiline: False
+
+        Button:
+            text: 'Criar conta'
+            size_hint_y: None
+            height: 50
+            background_color: (0.2, 0.5, 1, 1)
+            on_press:
+                app.root.current = 'home'  # ou 'login', dependendo do fluxo
+
+        Label:
+            text: 'ou'
+            size_hint_y: None
+            height: 30
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 20
+            Button:
+                text: 'G'  # Google
+            Button:
+                text: 'f'  # Facebook
+            Button:
+                text: ''  # Apple
+
+        Button:
+            text: 'Já tenho uma conta. Login'
+            size_hint_y: None
+            height: 40
+            background_color: (0, 0, 0, 0)
+            color: (0.2, 0.5, 1, 1)
+            on_press:
+                app.root.current = 'login'
