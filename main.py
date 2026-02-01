@@ -7,9 +7,11 @@ from kivy.clock import Clock
 from kivymd.app import MDApp  # usamos o MDApp "normal" aqui
 from kivy.metrics import dp
 
-from screens.auth import LoginScreen, SignupScreen, ForgotPasswordScreen, VerifyTokenScreen
 # Telas (importe ANTES de carregar os .kv)
+from screens.auth import LoginScreen, SignupScreen, ForgotPasswordScreen, VerifyTokenScreen
 from screens.home import HomeScreen
+from screens.cadastro import CadastroScreen  # ⬅️ nova tela de cadastro
+from screens.esportes import EsportesScreen
 
 # Diálogos e componentes de UI
 from kivymd.uix.dialog import MDDialog
@@ -34,6 +36,8 @@ class MyApp(MDApp):
         os.path.join("kv", "theme.kv"),
         os.path.join("kv", "auth.kv"),
         os.path.join("kv", "home.kv"),
+        os.path.join("kv", "cadastro.kv"),  # ⬅️ novo KV da tela de cadastro
+        os.path.join("kv", "esportes.kv"),
     ]
 
     # Pastas a observar para .py (screens) — se quiser rebuild do root ao alterar lógica
@@ -72,7 +76,9 @@ class MyApp(MDApp):
         root.add_widget(LoginScreen(name="login"))
         root.add_widget(SignupScreen(name="signup"))
         root.add_widget(ForgotPasswordScreen(name="forgot"))
-        root.add_widget(VerifyTokenScreen(name="verify"))   # ⬅️ nova tela
+        root.add_widget(VerifyTokenScreen(name="verify"))
+        root.add_widget(CadastroScreen(name="cadastro"))  # ⬅️ nova tela adicionada
+        root.add_widget(EsportesScreen(name="esportes"))
         root.add_widget(HomeScreen(name="home"))
         return root
 

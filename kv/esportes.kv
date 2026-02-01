@@ -1,0 +1,25 @@
+<EsportesScreen>:
+    name: "esportes"
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 20
+
+        MDLabel:
+            text: "Seus esportes favoritos"
+            halign: "center"
+            font_style: "H5"
+
+        MDLabel:
+            text: "Escolha 3 esportes que você ama ou quer conhecer melhor."
+            halign: "center"
+            font_style: "Body1"
+
+        ScrollView:
+            MDList:
+                id: lista_esportes   # ⬅️ preenchida dinamicamente
+
+        MDRaisedButton:
+            text: "Tudo pronto!"
+            pos_hint: {"center_x": 0.5}
+            on_release: root.confirmar_escolhas()
