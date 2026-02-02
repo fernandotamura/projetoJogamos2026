@@ -82,7 +82,7 @@ class User(Base):
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
     is_verified: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
+        DateTime(),
         default=lambda: datetime.now(timezone.utc),
         nullable=False
     )
@@ -109,9 +109,9 @@ class EmailToken(Base):
         index=True
     )
     token: Mapped[str] = mapped_column(String(16), nullable=False)
-    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(), nullable=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
+        DateTime(),
         default=lambda: datetime.now(timezone.utc),
         nullable=False
     )
@@ -129,7 +129,7 @@ engine = create_engine(
 Base.metadata.create_all(engine)
 
 def now_utc() -> datetime:
-    return datetime.now(timezone.utc)
+    return datetime.utcnow()
 
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
@@ -260,7 +260,9 @@ def verify_email(body: VerifyIn):
             .order_by(EmailToken.id.desc())
             .first()
         )
-        if not t or t.expires_at < now_utc():
+        
+        exp = t.expires_at
+        if exp is None or exp < now_utc():
             raise HTTPException(status_code=400, detail="Token não encontrado ou expirado.")
         if token_in != t.token:
             raise HTTPException(status_code=400, detail="Token inválido.")
