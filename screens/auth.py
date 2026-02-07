@@ -44,7 +44,7 @@ class LoginScreen(BaseAuthScreen):
 
             if st == 200:
                 self.toast("Login realizado!")
-                self.app_ref.root_manager.current = "home"
+                self.app_ref.root_manager.current = "shell"
             else:
                 detail = data.get("detail") or str(data)
                 self.notify_error(detail)

@@ -1,6 +1,19 @@
 #:import dp kivy.metrics.dp
 #:import FocusBehavior kivy.uix.behaviors.focus
 
+# Card clicável com ripple (garante on_release funcionando)
+<ClickableCard@ButtonBehavior+MDCard>:
+    ripple_behavior: True
+
+# Botão inferior (estilo do Figma: preto arredondado)
+<BottomBlackButton@ButtonBehavior+MDCard>:
+    size_hint_x: 1
+    size_hint_y: None
+    height: dp(56)
+    md_bg_color: 0.05, 0.05, 0.05, 1
+    radius: [16, 16, 16, 16]
+    ripple_behavior: True
+
 <JogamosTextField@MDTextField>:
     size_hint_y: None
     height: dp(56)
@@ -91,3 +104,17 @@
     # opcional: pequeno realce quando focado via TAB
     on_focus:
         setattr(self, "md_bg_color", (0.10, 0.20, 0.88, 1)) if self.focus else setattr(self, "md_bg_color", (0.117, 0.227, 0.996, 1))
+
+
+# Card clicável com ripple (MRO corrigido: MDCard + ButtonBehavior)
+<ClickableCard@MDCard+ButtonBehavior>:
+    ripple_behavior: True
+
+# Botão inferior (estilo Figma: preto arredondado) - também MRO corrigido
+<BottomBlackButton@MDCard+ButtonBehavior>:
+    size_hint_x: 1
+    size_hint_y: None
+    height: dp(56)
+    md_bg_color: 0.05, 0.05, 0.05, 1
+    radius: [16, 16, 16, 16]
+    ripple_behavior: True

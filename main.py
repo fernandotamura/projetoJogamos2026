@@ -12,6 +12,7 @@ from screens.auth import LoginScreen, SignupScreen, ForgotPasswordScreen, Verify
 from screens.home import HomeScreen
 from screens.cadastro import CadastroScreen  # ⬅️ nova tela de cadastro
 from screens.esportes import EsportesScreen
+from screens.sports import ChooseSportsScreen
 
 # Diálogos e componentes de UI
 from kivymd.uix.dialog import MDDialog
@@ -19,6 +20,10 @@ from kivymd.uix.button import MDFlatButton
 from kivymd.uix.spinner import MDSpinner
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.label import MDLabel
+
+# Depois de logado
+from screens.shell import AppShellScreen
+
 
 
 class RootManager(ScreenManager):
@@ -38,6 +43,8 @@ class MyApp(MDApp):
         os.path.join("kv", "home.kv"),
         os.path.join("kv", "cadastro.kv"),  # ⬅️ novo KV da tela de cadastro
         os.path.join("kv", "esportes.kv"),
+        os.path.join("kv", "sports.kv"),
+        os.path.join("kv", "shell.kv"),
     ]
 
     # Pastas a observar para .py (screens) — se quiser rebuild do root ao alterar lógica
@@ -80,6 +87,8 @@ class MyApp(MDApp):
         root.add_widget(CadastroScreen(name="cadastro"))  # ⬅️ nova tela adicionada
         root.add_widget(EsportesScreen(name="esportes"))
         root.add_widget(HomeScreen(name="home"))
+        # root.add_widget(ChooseSportsScreen(name="choose_sports"))
+        root.add_widget(AppShellScreen(name="shell"))
         return root
 
     # -----------------------------------

@@ -6,15 +6,16 @@ import ssl
 from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
 from typing import Optional
-
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, EmailStr, Field
 from dotenv import load_dotenv
-
 from sqlalchemy import create_engine, String, DateTime, Integer, ForeignKey, Boolean, select, func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Session, relationship
-
 from passlib.context import CryptContext
+from datetime import datetime
+from pydantic import BaseModel
+from typing import List
+from sqlalchemy import text
 
 # -----------------------
 # .env helpers
@@ -319,3 +320,34 @@ def login(body: LoginIn):
 
     # Se quiser emitir JWT, este é o ponto; por ora, retornamos 200 simples
     return {"message": "Login OK"}
+
+class FavoritesIn(BaseModel):
+    email: str
+    sports: List[str]  # deve vir com 3 itens
+
+@app.post("/user/favorites")
+def set_favorites(body: FavoritesIn):
+    email = body.email.strip().lower()
+    sports = body.sports
+
+    if len(sports) != 3:
+        raise HTTPException(status_code=400, detail="Escolha exatamente 3 esportes.")
+
+    # remove duplicados
+    sports = list(dict.fromkeys(sports))
+    if len(sports) != 3:
+        raise HTTPException(status_code=400, detail="Esportes repetidos não são permitidos.")
+
+    now = datetime.utcnow()
+
+    with engine.begin() as conn:
+        # remove antigos
+        conn.execute(text("DELETE FROM user_favorites WHERE email=:email"), {"email": email})
+        # insere novos
+        for s in sports:
+            conn.execute(
+                text("INSERT INTO user_favorites (email, sport_key, created_at) VALUES (:email, :sport, :created_at)"),
+                {"email": email, "sport": s, "created_at": now}
+            )
+
+    return {"message": "Favoritos salvos com sucesso.", "email": email, "sports": sports}
