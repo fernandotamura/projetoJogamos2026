@@ -55,104 +55,114 @@
 
 
 <ChooseSportsScreen>:
-    ScrollView:
-        do_scroll_x: False
+    MDBoxLayout:
+        orientation: "vertical"
 
-        MDBoxLayout:
-            orientation: "vertical"
-            size_hint_y: None
-            height: self.minimum_height
-            padding: dp(20), dp(24), dp(20), dp(24)   # 20px laterais
-            spacing: dp(16)
+        # Barra superior com Voltar e Menu
+        MDTopAppBar:
+            title: "Esportes favoritos"
+            left_action_items: [["arrow-left", lambda x: root.go_back()]]
+            right_action_items: [["menu", lambda x: root.open_drawer()]]
 
-            # Logo
-            AnchorLayout:
+        # Conteúdo rolável
+        ScrollView:
+            do_scroll_x: False
+
+            MDBoxLayout:
+                orientation: "vertical"
                 size_hint_y: None
-                height: dp(56)
-                anchor_x: "center"
-                anchor_y: "center"
-                Image:
-                    source: "assets/images/logo_jogamos.jpg"
-                    allow_stretch: True
-                    keep_ratio: True
-                    size_hint: None, None
-                    height: dp(40)
-                    width: dp(120)
+                height: self.minimum_height
+                padding: dp(20), dp(24), dp(20), dp(24)   # 20px laterais como no Figma
+                spacing: dp(16)
 
-            # Título
-            MDLabel:
-                text: "Seus esportes\nfavoritos"
-                font_style: "H4"
-                bold: True
-                halign: "left"
-                size_hint_y: None
-                text_size: self.width, None
-                height: self.texture_size[1]
+                # Logo
+                AnchorLayout:
+                    size_hint_y: None
+                    height: dp(56)
+                    anchor_x: "center"
+                    anchor_y: "center"
+                    Image:
+                        source: "assets/images/logo_jogamos.jpg"
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: None, None
+                        height: dp(40)
+                        width: dp(120)
 
-            # Subtítulo
-            MDLabel:
-                text: "Já vamos começar. Para melhorar sua experiência,\nescolha 3 esportes que você ama ou quer\nconhecer melhor."
-                theme_text_color: "Secondary"
-                font_size: "13sp"
-                halign: "left"
-                size_hint_y: None
-                text_size: self.width, None
-                height: self.texture_size[1]
+                # Título
+                MDLabel:
+                    text: "Seus esportes\\nfavorito"
+                    font_style: "H4"
+                    bold: True
+                    halign: "left"
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.texture_size[1]
 
-            MDLabel:
-                size_hint_y: None
-                height: dp(8)
+                # Subtítulo
+                MDLabel:
+                    text: "Já vamos começar. Para melhorar sua experiência,\\nescolha 3 esportes que você ama ou quer\\nconhecer melhor."
+                    theme_text_color: "Secondary"
+                    font_size: "13sp"
+                    halign: "left"
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.texture_size[1]
 
-            # Cards
-            SportOptionCard:
-                id: card_badminton
-                key: "badminton"
-                title: "BADMINTON"
-                right_icon: "tennis"
-                right_color: 0.62, 0.87, 0.92, 1
+                MDLabel:
+                    size_hint_y: None
+                    height: dp(8)
 
-            SportOptionCard:
-                id: card_basquete
-                key: "basquete"
-                title: "BASQUETE"
-                right_icon: "basketball"
-                right_color: 0.00, 0.78, 0.47, 1
+                # ====== Cards de esporte (mantenha os seus aqui) ======
+                SportOptionCard:
+                    id: card_badminton
+                    key: "badminton"
+                    title: "BADMINTON"
+                    right_icon: "tennis"
+                    right_color: 0.62, 0.87, 0.92, 1
 
-            SportOptionCard:
-                id: card_bmx
-                key: "bmx"
-                title: "BMX"
-                right_icon: "bike"
-                right_color: 0.62, 0.20, 0.84, 1
+                SportOptionCard:
+                    id: card_basquete
+                    key: "basquete"
+                    title: "BASQUETE"
+                    right_icon: "basketball"
+                    right_color: 0.00, 0.78, 0.47, 1
 
-            SportOptionCard:
-                id: card_caminhada
-                key: "caminhada"
-                title: "CAMINHADA"
-                right_icon: "walk"
-                right_color: 1.00, 0.62, 0.22, 1
+                SportOptionCard:
+                    id: card_bmx
+                    key: "bmx"
+                    title: "BMX"
+                    right_icon: "bike"
+                    right_color: 0.62, 0.20, 0.84, 1
 
-            SportOptionCard:
-                id: card_corrida
-                key: "corrida"
-                title: "CORRIDA"
-                right_icon: "run"
-                right_color: 0.98, 0.20, 0.24, 1
+                SportOptionCard:
+                    id: card_caminhada
+                    key: "caminhada"
+                    title: "CAMINHADA"
+                    right_icon: "walk"
+                    right_color: 1.00, 0.62, 0.22, 1
 
-            MDLabel:
-                size_hint_y: None
-                height: dp(10)
+                SportOptionCard:
+                    id: card_corrida
+                    key: "corrida"
+                    title: "CORRIDA"
+                    right_icon: "run"
+                    right_color: 0.98, 0.20, 0.24, 1
 
-            # Botão "Tudo pronto!" (usa o componente do theme.kv)
-            BottomBlackButton:
-                id: btn_done
-                disabled: True
-                on_release: root.finish()
+                MDLabel:
+                    size_hint_y: None
+                    height: dp(10)
 
-                MDBoxLayout:
-                    padding: dp(16), 0
-                    MDLabel:
-                        text: "Tudo pronto!"
-                        halign: "center"
-                        color: 1, 1, 1, 1
-                        bold: True
+                # Botão "Tudo pronto!"
+                BottomBlackButton:
+                    id: btn_done
+                    disabled: True
+                    on_release: root.finish()
+
+                    MDBoxLayout:
+                        padding: dp(16), 0
+                        MDLabel:
+                            text: "Tudo pronto!"
+                            halign: "center"
+                            color: 1, 1, 1, 1
+                            bold: True

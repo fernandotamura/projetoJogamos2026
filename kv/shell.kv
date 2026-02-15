@@ -1,78 +1,11 @@
-#:import dp kivy.metrics.dp
+MDScreenManager:
+    id: shell_sm
+    on_kv_post: self.current = "dashboard"
 
-<AppShellScreen>:
-    MDNavigationLayout:
+    # Página inicial = Dashboard NOVO
+    DashboardScreen:
+        name: "dashboard"
 
-        # ===== Conteúdo principal =====
-        MDScreenManager:
-            id: shell_sm
-
-            # --- Página inicial (Dashboard) ---
-            MDScreen:
-                name: "dashboard"
-
-                MDBoxLayout:
-                    orientation: "vertical"
-
-                    MDTopAppBar:
-                        title: "Jogamos"
-                        left_action_items: [["menu", lambda x: root.open_drawer()]]
-
-                    MDBoxLayout:
-                        orientation: "vertical"
-                        padding: dp(20)
-                        spacing: dp(12)
-
-                        MDLabel:
-                            text: "Bem-vindo!"
-                            font_style: "H5"
-
-                        MDLabel:
-                            text: "Use o menu ☰ para acessar 'Esportes favoritos'."
-                            theme_text_color: "Secondary"
-
-            # --- Página: Esportes favoritos (tela do Figma) ---
-            ChooseSportsScreen:
-                name: "favorites"
-
-        # ===== Drawer lateral =====
-        MDNavigationDrawer:
-            id: nav_drawer
-            radius: (0, dp(16), dp(16), 0)
-
-            MDBoxLayout:
-                orientation: "vertical"
-                padding: dp(12)
-                spacing: dp(10)
-
-                # Cabeçalho do menu
-                MDLabel:
-                    text: "Menu"
-                    font_style: "H6"
-                    size_hint_y: None
-                    height: self.texture_size[1] + dp(10)
-
-                MDSeparator:
-
-                # Itens do menu
-                OneLineIconListItem:
-                    text: "Início"
-                    on_release: root.go_to("dashboard")
-                    IconLeftWidget:
-                        icon: "home-outline"
-
-                OneLineIconListItem:
-                    text: "Esportes favoritos"
-                    on_release: root.go_to("favorites")
-                    IconLeftWidget:
-                        icon: "star-outline"
-
-                MDSeparator:
-
-                OneLineIconListItem:
-                    text: "Sair"
-                    on_release:
-                        app.root.current = "login"
-                        root.close_drawer()
-                    IconLeftWidget:
-                        icon: "logout"
+    # Esportes favoritos
+    ChooseSportsScreen:
+        name: "favorites"

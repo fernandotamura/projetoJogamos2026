@@ -1,0 +1,423 @@
+#:import dp kivy.metrics.dp
+
+# --- Tile redondo dos esportes (com sombra leve) ---
+<SportPill@MDCard+ButtonBehavior>:
+    text: ""
+    icon: "star"
+    radius: [20, 20, 20, 20]
+    size_hint: None, None
+    size: dp(84), dp(84)
+    elevation: 2
+    md_bg_color: 1, 1, 1, 1
+    ripple_behavior: True
+    on_release: app.toast(f"{root.text or 'Ação'} (UI)")
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: dp(12), dp(10)
+        spacing: dp(6)
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(36)
+            MDIcon:
+                icon: root.icon
+                halign: "center"
+                valign: "middle"
+                theme_text_color: "Custom"
+                text_color: 0.16, 0.16, 0.16, 1
+        MDLabel:
+            text: root.text
+            font_size: "11sp"
+            halign: "center"
+            theme_text_color: "Secondary"
+
+# --- Cartão azul “TIMES | METAS” ---
+<StatsBlueCard@MDCard>:
+    radius: [20, 20, 20, 20]
+    md_bg_color: 0.117, 0.227, 0.996, 1   # #1E3AFE
+    size_hint_y: None
+    height: dp(148)
+    elevation: 0
+    padding: dp(16)
+
+    MDGridLayout:
+        cols: 2
+        spacing: dp(0)
+        rows: 1
+
+        # Lado ESQUERDO — TIMES
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: dp(4)
+            MDBoxLayout:
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(8)
+                MDIcon:
+                    icon: "account-group"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                MDLabel:
+                    text: "TIMES"
+                    bold: True
+                    color: 1, 1, 1, 1
+                    font_size: "13sp"
+
+            MDLabel:
+                text: "05"
+                color: 1, 1, 1, 1
+                font_style: "H4"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            MDLabel:
+                text: "times ativos"
+                color: 1, 1, 1, .9
+                font_size: "12sp"
+
+        # Divisor vertical no meio
+        MDSeparator:
+            orientation: "vertical"
+            size_hint_x: None
+            width: dp(1)
+            color: 1, 1, 1, .25
+
+        # Lado DIREITO — METAS
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: dp(4)
+            MDBoxLayout:
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(8)
+                MDIcon:
+                    icon: "target"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                MDLabel:
+                    text: "METAS"
+                    bold: True
+                    color: 1, 1, 1, 1
+                    font_size: "13sp"
+
+            MDLabel:
+                text: "04/05"
+                color: 1, 1, 1, 1
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+            MDLabel:
+                text: "metas completas"
+                color: 1, 1, 1, .9
+                font_size: "12sp"
+            MDBoxLayout:
+                size_hint_y: None
+                height: dp(8)
+                MDProgressBar:
+                    value: 80
+                    color: 1, 1, 1, 1
+                    back_color: 1,1,1,.25
+
+# --- Card de Evento (com badge verde e mini-avatars) ---
+<EventCard@MDCard>:
+    radius: [20, 20, 20, 20]
+    md_bg_color: 1, 1, 1, 1
+    elevation: 6
+    size_hint_y: None
+    height: dp(140)
+    padding: dp(14)
+    ripple_behavior: True
+    on_release: app.toast("Abrir evento (UI)")
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: dp(6)
+
+        # Header: título + badge
+        MDBoxLayout:
+            spacing: dp(8)
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDLabel:
+                text: "Os Titans"
+                font_style: "H5"
+                halign: "left"
+                valign: "middle"
+
+            MDCard:
+                size_hint: None, None
+                size: dp(40), dp(40)
+                radius: [12, 12, 12, 12]
+                md_bg_color: 0.0, 0.78, 0.47, 1  # verde
+                elevation: 0
+                MDIcon:
+                    icon: "walk"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    halign: "center"
+                    valign: "middle"
+
+        MDLabel:
+            text: "BASQUETE"
+            color: 0.12, 0.55, 1, 1
+            font_size: "12sp"
+            bold: True
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        # Linha 1 — distância
+        MDBoxLayout:
+            spacing: dp(8)
+            size_hint_y: None
+            height: dp(20)
+            MDIcon:
+                icon: "map-marker-distance"
+                theme_text_color: "Custom"
+                text_color: 0.16, 0.16, 0.16, 1
+                font_size: "16sp"
+            MDLabel:
+                text: "6 km de você"
+                halign: "left"
+                theme_text_color: "Secondary"
+
+        # Linha 2 — data/hora
+        MDBoxLayout:
+            spacing: dp(8)
+            size_hint_y: None
+            height: dp(20)
+            MDIcon:
+                icon: "calendar"
+                theme_text_color: "Custom"
+                text_color: 0.16, 0.16, 0.16, 1
+            MDLabel:
+                text: "Sex, 07 de abril - 18:00"
+                halign: "left"
+                theme_text_color: "Secondary"
+
+        # Rodapé — mini-avatars e lotação
+        MDBoxLayout:
+            spacing: dp(8)
+            size_hint_y: None
+            height: dp(28)
+
+            # Mini-avatars (placeholders)
+            MDBoxLayout:
+                size_hint_x: None
+                width: dp(88)
+                spacing: dp(-8)  # overlap leve
+                MDCard:
+                    size_hint: None, None
+                    size: dp(28), dp(28)
+                    radius: [14, 14, 14, 14]
+                    elevation: 2
+                    md_bg_color: 0.9, 0.9, 0.9, 1
+                    MDIcon:
+                        icon: "account"
+                        theme_text_color: "Custom"
+                        text_color: 0.25, 0.25, 0.25, 1
+                MDCard:
+                    size_hint: None, None
+                    size: dp(28), dp(28)
+                    radius: [14, 14, 14, 14]
+                    elevation: 2
+                    md_bg_color: 0.9, 0.9, 0.9, 1
+                    MDIcon:
+                        icon: "account"
+                        theme_text_color: "Custom"
+                        text_color: 0.25, 0.25, 0.25, 1
+                MDCard:
+                    size_hint: None, None
+                    size: dp(28), dp(28)
+                    radius: [14, 14, 14, 14]
+                    elevation: 2
+                    md_bg_color: 0.9, 0.9, 0.9, 1
+                    MDIcon:
+                        icon: "account"
+                        theme_text_color: "Custom"
+                        text_color: 0.25, 0.25, 0.25, 1
+
+            MDWidget:
+            MDLabel:
+                text: "08/10"
+                bold: True
+                halign: "right"
+
+
+# --- DASHBOARD fiel ao Figma ---
+<DashboardScreen>:
+    # FloatLayout para permitir uma bottom bar com FAB central
+    FloatLayout:
+
+        # Conteúdo rolável
+        ScrollView:
+            do_scroll_x: False
+            size_hint: 1, 1
+
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                padding: dp(16), dp(12), dp(16), dp(96)   # padding bottom maior p/ não cobrir a bottom bar
+                spacing: dp(18)
+
+                # Header: saudação + nome grande + avatar
+                MDBoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: dp(6)
+
+                    MDBoxLayout:
+                        size_hint_y: None
+                        height: dp(28)
+                        # (status bar do Figma ignorada)
+                        MDWidget:
+
+                    MDBoxLayout:
+                        spacing: dp(10)
+                        size_hint_y: None
+                        height: self.minimum_height
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            size_hint_x: 1
+                            spacing: dp(2)
+                            MDLabel:
+                                text: f"{root.greeting},"
+                                font_size: "18sp"
+                                halign: "left"
+                            MDLabel:
+                                text: root.user_name
+                                font_style: "H4"
+                                bold: True
+                                halign: "left"
+
+                        # Avatar (ícone por enquanto)
+                        MDCard:
+                            size_hint: None, None
+                            size: dp(42), dp(42)
+                            radius: [21, 21, 21, 21]
+                            elevation: 0
+                            md_bg_color: 0.92, 0.92, 0.92, 1
+                            MDIconButton:
+                                icon: "account"
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                on_release: app.toast("Perfil (UI)")
+
+                # Bloco azul stats
+                StatsBlueCard:
+
+                # Título "Esportes"
+                MDLabel:
+                    text: "Esportes"
+                    font_style: "H6"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                # Carrossel horizontal de esportes
+                ScrollView:
+                    do_scroll_y: False
+                    size_hint_y: None
+                    height: dp(96)
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        size_hint_x: None
+                        width: self.minimum_width
+                        spacing: dp(12)
+                        padding: dp(2), 0
+
+                        SportPill:
+                            text: "Basquete"
+                            icon: "basketball"
+                        SportPill:
+                            text: "Skate"
+                            icon: "skateboard"
+                        SportPill:
+                            text: "Caminhada"
+                            icon: "walk"
+                        # Tile preto (Pesquisar esportes)
+                        MDCard:
+                            radius: [20, 20, 20, 20]
+                            size_hint: None, None
+                            size: dp(84), dp(84)
+                            elevation: 2
+                            md_bg_color: 0.07, 0.07, 0.07, 1
+                            ripple_behavior: True
+                            on_release: root.open_search()
+
+                            MDBoxLayout:
+                                orientation: "vertical"
+                                padding: dp(12), dp(10)
+                                spacing: dp(6)
+                                MDBoxLayout:
+                                    size_hint_y: None
+                                    height: dp(36)
+                                    MDIcon:
+                                        icon: "magnify"
+                                        theme_text_color: "Custom"
+                                        text_color: 1, 1, 1, 1
+                                MDLabel:
+                                    text: "Pesquisar\nesportes"
+                                    halign: "center"
+                                    color: 1, 1, 1, 1
+                                    font_size: "11sp"
+
+                # Título "Eventos"
+                MDLabel:
+                    text: "Eventos"
+                    font_style: "H6"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                # Carrossel horizontal de eventos (1 card por enquanto)
+                ScrollView:
+                    do_scroll_y: False
+                    size_hint_y: None
+                    height: dp(160)
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        size_hint_x: None
+                        width: self.minimum_width
+                        spacing: dp(14)
+
+                        EventCard:
+                        # Poderíamos duplicar mais EventCard aqui para scroll horizontal
+
+        # ---------- Bottom Bar com 5 ícones e FAB central ----------
+        # Container arredondado
+        MDCard:
+            size_hint: None, None
+            width: min(root.width - dp(32), dp(360))
+            height: dp(68)
+            radius: [24, 24, 24, 24]
+            elevation: 12
+            md_bg_color: 1, 1, 1, 1
+            pos_hint: {"center_x": 0.5, "y": 0.02}
+
+            MDBoxLayout:
+                padding: dp(12), 0
+                spacing: dp(8)
+                MDIconButton:
+                    icon: "home-variant"
+                    on_release: app.toast("Início (UI)")
+                MDIconButton:
+                    icon: "file-document-outline"
+                    on_release: app.toast("Feed/Posts (UI)")
+                MDWidget:  # espaço para o FAB central
+                MDIconButton:
+                    icon: "message-outline"
+                    on_release: app.toast("Mensagens (UI)")
+                MDIconButton:
+                    icon: "apps"
+                    on_release: app.toast("Mais (UI)")
+
+        # FAB central (azul)
+        MDFloatingActionButton:
+            icon: "plus"
+            md_bg_color: 0.117, 0.227, 0.996, 1
+            pos_hint: {"center_x": 0.5, "y": 0.05}
+            elevation: 14
+            on_release: app.toast("Ação principal (UI)")

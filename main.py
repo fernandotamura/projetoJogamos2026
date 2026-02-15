@@ -1,5 +1,6 @@
 import os
 import time
+from screens.dashboard import DashboardScreen
 from typing import Dict
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, FadeTransition
@@ -41,11 +42,14 @@ class MyApp(MDApp):
         os.path.join("kv", "theme.kv"),
         os.path.join("kv", "auth.kv"),
         os.path.join("kv", "home.kv"),
-        os.path.join("kv", "cadastro.kv"),  # ⬅️ novo KV da tela de cadastro
+        os.path.join("kv", "cadastro.kv"),
         os.path.join("kv", "esportes.kv"),
         os.path.join("kv", "sports.kv"),
-        os.path.join("kv", "shell.kv"),
-    ]
+        os.path.join("kv", "dashboard.kv"),   # ⬅️ coloque aqui
+        os.path.join("kv", "shell.kv"),       # ⬅️ depois dele
+            # os.path.join("kv", "viewport.kv"),  # se você ainda usar viewport no Shell, mantenha
+        ]
+
 
     # Pastas a observar para .py (screens) — se quiser rebuild do root ao alterar lógica
     WATCH_PY_DIRS = [

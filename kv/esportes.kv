@@ -1,25 +1,112 @@
-<EsportesScreen>:
-    name: "esportes"
+<ChooseSportsScreen>:
     MDBoxLayout:
         orientation: "vertical"
-        padding: 20
-        spacing: 20
 
-        MDLabel:
-            text: "Seus esportes favoritos"
-            halign: "center"
-            font_style: "H5"
+        # Barra superior com Voltar e Menu
+        MDTopAppBar:
+            title: "Esportes favoritos"
+            left_action_items: [["arrow-left", lambda x: root.go_back()]]
+            right_action_items: [["menu", lambda x: root.open_drawer()]]
 
-        MDLabel:
-            text: "Escolha 3 esportes que você ama ou quer conhecer melhor."
-            halign: "center"
-            font_style: "Body1"
-
+        # Conteúdo rolável
         ScrollView:
-            MDList:
-                id: lista_esportes   # ⬅️ preenchida dinamicamente
+            do_scroll_x: False
 
-        MDRaisedButton:
-            text: "Tudo pronto!"
-            pos_hint: {"center_x": 0.5}
-            on_release: root.confirmar_escolhas()
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                padding: dp(20), dp(24), dp(20), dp(24)   # 20px laterais como no Figma
+                spacing: dp(16)
+
+                # Logo
+                AnchorLayout:
+                    size_hint_y: None
+                    height: dp(56)
+                    anchor_x: "center"
+                    anchor_y: "center"
+                    Image:
+                        source: "assets/images/logo_jogamos.jpg"
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: None, None
+                        height: dp(40)
+                        width: dp(120)
+
+                # Título
+                MDLabel:
+                    text: "Seus esportes\\nfavorito"
+                    font_style: "H4"
+                    bold: True
+                    halign: "left"
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+
+                # Subtítulo
+                MDLabel:
+                    text: "Já vamos começar. Para melhorar sua experiência,\\nescolha 3 esportes que você ama ou quer\\nconhecer melhor."
+                    theme_text_color: "Secondary"
+                    font_size: "13sp"
+                    halign: "left"
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+
+                MDLabel:
+                    size_hint_y: None
+                    height: dp(8)
+
+                # ====== Cards de esporte (mantenha os seus aqui) ======
+                SportOptionCard:
+                    id: card_badminton
+                    key: "badminton"
+                    title: "BADMINTON"
+                    right_icon: "tennis"
+                    right_color: 0.62, 0.87, 0.92, 1
+
+                SportOptionCard:
+                    id: card_basquete
+                    key: "basquete"
+                    title: "BASQUETE"
+                    right_icon: "basketball"
+                    right_color: 0.00, 0.78, 0.47, 1
+
+                SportOptionCard:
+                    id: card_bmx
+                    key: "bmx"
+                    title: "BMX"
+                    right_icon: "bike"
+                    right_color: 0.62, 0.20, 0.84, 1
+
+                SportOptionCard:
+                    id: card_caminhada
+                    key: "caminhada"
+                    title: "CAMINHADA"
+                    right_icon: "walk"
+                    right_color: 1.00, 0.62, 0.22, 1
+
+                SportOptionCard:
+                    id: card_corrida
+                    key: "corrida"
+                    title: "CORRIDA"
+                    right_icon: "run"
+                    right_color: 0.98, 0.20, 0.24, 1
+
+                MDLabel:
+                    size_hint_y: None
+                    height: dp(10)
+
+                # Botão "Tudo pronto!"
+                BottomBlackButton:
+                    id: btn_done
+                    disabled: True
+                    on_release: root.finish()
+
+                    MDBoxLayout:
+                        padding: dp(16), 0
+                        MDLabel:
+                            text: "Tudo pronto!"
+                            halign: "center"
+                            color: 1, 1, 1, 1
+                            bold: True

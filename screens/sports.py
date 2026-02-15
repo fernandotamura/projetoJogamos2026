@@ -48,3 +48,22 @@ class ChooseSportsScreen(MDScreen):
     def _app(self):
         from kivy.app import App
         return App.get_running_app()
+    
+    def go_back(self):
+        """
+        Volta para a página inicial do Shell (dashboard).
+        Como ChooseSportsScreen está dentro do MDScreenManager do shell.kv,
+        self.manager é esse ScreenManager interno.
+        """
+        if self.manager:
+            self.manager.current = "dashboard"
+
+    def open_drawer(self):
+        """
+        Abre o menu hamburger (drawer) do Shell.
+        O drawer fica no AppShellScreen (screen 'shell' do ScreenManager principal).
+        """
+        from kivy.app import App
+        app = App.get_running_app()
+        shell = app.root.get_screen("shell")  # ScreenManager principal → screen 'shell'
+        shell.open_drawer()
