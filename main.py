@@ -117,7 +117,7 @@ class MyApp(MDApp):
 
         # ... depois de sm.add_widget(LoginScreen(name="login")) e as demais:
         print("[Debug] telas no ScreenManager =", [s.name for s in sm.screens])
-        sm.current = "login"  # GARANTE que abrimos na tela de login
+        sm.current = "login"  # força abrir na tela de Login enquanto migramos o resto
         print("[Debug] tela atual =", sm.current)
         return sm
 

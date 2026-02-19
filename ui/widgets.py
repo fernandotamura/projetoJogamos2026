@@ -2,5 +2,5 @@
 from kivymd.uix.textfield import MDTextField
 
 class JogamosTextField(MDTextField):
-    """Base de TextField da UI (classe real, registrada no Factory)."""
+    """TextField base da UI. Classe real (Factory conhece antes de ler KV)."""
     pass
