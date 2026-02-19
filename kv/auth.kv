@@ -1,114 +1,86 @@
-#:import dp kivy.metrics.dp
+#:import dp kivymd.material_resources.dp
 #:import FocusBehavior kivy.uix.behaviors.focus
 
 # -----------------------------
 # LOGIN
 # -----------------------------
 
+
+LoginCtaButton@FocusBehavior+MDButton>:
+    size_hint_y: None
+    height: dp(56)
+    size_hint_x: 1
+    style: "filled"
+    md_bg_color: 0.039, 0.220, 1.0, 1     # #0A38FF
+    text_color: 1, 1, 1, 1
+    radius: [24, 24, 24, 24]
+    elevation: 4
+
 <LoginScreen>:
+    md_bg_color: 0.97, 0.97, 0.98, 1   # fundo claro suave como no mock
     ScrollView:
         do_scroll_x: False
         do_scroll_y: True
-        bar_width: dp(4)
+        bar_width: dp(4)        
 
-        # ✅ Container rolável (precisa ter minimum_height)
         MDBoxLayout:
-            id: scroll_box
             orientation: "vertical"
-            size_hint_x: 1
             size_hint_y: None
             height: self.minimum_height
-            padding: 0, 0
 
-            # ✅ "Palco" para centralizar vertical e horizontal
             AnchorLayout:
-                id: stage
-                size_hint_x: 1
                 size_hint_y: None
-
-                # altura do palco = o maior entre (altura da tela) e (altura do conteúdo)
                 height: max(root.height, content_box.minimum_height)
-
                 anchor_x: "center"
                 anchor_y: "center"
 
-                # ✅ Caixa que define o conteúdo (tem minimum_height!)
-                MDBoxLayout:
+                LoginMaxWidthBox:
                     id: content_box
-                    orientation: "vertical"
-                    size_hint_x: None
-                    width: min(root.width - dp(40), dp(440))
-                    size_hint_y: None
-                    height: self.minimum_height
-                    padding: dp(20)
-                    spacing: dp(14)
 
-                    # === Seu card (mantive seu conteúdo original) ===
-                    MDCard:
-                        id: _content_card
-                        size_hint_x: 1
+                    # —— bloco principal (sem card de fundo) ——
+                    MDBoxLayout:
+                        orientation: "vertical"
                         size_hint_y: None
                         height: self.minimum_height
-                        radius: [16, 16, 16, 16]
-                        padding: dp(20)
-                        elevation: 2
-                        md_bg_color: 1, 1, 1, 1
+                        spacing: dp(16)
 
+                        # LOGO
+                        AnchorLayout:
+                            size_hint_y: None
+                            height: dp(70)
+                            anchor_x: "center"
+                            anchor_y: "center"
+                            Image:
+                                source: "assets/images/logo_jogamos.jpg"
+                                size_hint: None, None
+                                width: dp(140)
+                                height: dp(32)
+                                allow_stretch: True
+                                keep_ratio: True
+
+                        # TÍTULO / SUBTÍTULO
                         MDBoxLayout:
                             orientation: "vertical"
                             size_hint_y: None
                             height: self.minimum_height
-                            spacing: dp(14)
+                            spacing: dp(6)
+                            LoginTitle:
+                                text: "Login"
+                            LoginSubtitle:
+                                text: "Estamos muito felizes que você voltou. Entre com seu e‑mail e sua senha ou com suas redes sociais"
 
-                            # --- Cabeçalho (logo + título + subtítulo) ---
-                            MDBoxLayout:
-                                orientation: "vertical"
-                                spacing: dp(8)
-                                size_hint_y: None
-                                height: self.minimum_height
-
-                                AnchorLayout:
-                                    size_hint_y: None
-                                    height: dp(48)
-                                    anchor_x: "center"
-                                    anchor_y: "center"
-
-                                    Image:
-                                        source: "assets/images/logo_jogamos.jpg"
-                                        allow_stretch: True
-                                        keep_ratio: True
-                                        size_hint: None, None
-                                        height: dp(40)
-                                        width: dp(120)
-
-                                MDLabel:
-                                    text: "Login"
-                                    font_style: "H5"
-                                    halign: "left"
-                                    size_hint_y: None
-                                    height: self.texture_size[1]
-
-                                MDLabel:
-                                    text: "Estamos muito felizes que você voltou. Entre com seu e‑mail e sua senha ou com suas redes sociais"
-                                    theme_text_color: "Secondary"
-                                    font_size: "13sp"
-                                    halign: "left"
-                                    size_hint_y: None
-                                    text_size: self.width, None
-                                    height: self.texture_size[1]
-
-                            # --- Campo E-mail ---
-                            JogamosTextField:
-                                id: email_input
-                                hint_text: "E-mail"
-                                focus_next: password_input
-                                on_text_validate: password_input.focus = True
-
-                            # --- Campo Senha + “olho” ---
+                        # CAMPOS
+                        JogamosTextField:
+                            id: email_input
+                            hint_text: "E-mail"
+                            MDTextFieldTrailingIcon:
+                                icon: "email-outline"
+                        MDBoxLayout:
+                            size_hint_y: None
+                            height: dp(56)
                             MDRelativeLayout:
                                 size_hint_y: None
-                                height: dp(56)
-
+                                height: dp(56)                                                                
                                 JogamosTextField:
                                     id: password_input
                                     hint_text: "Senha"
@@ -122,97 +94,91 @@
                                     icon: "eye-off" if password_input.password else "eye"
                                     pos_hint: {"center_y": 0.5}
                                     theme_icon_color: "Custom"
-                                    icon_color: app.theme_cls.primary_color
+                                    icon_color: app.theme_cls.primaryColor
                                     x: password_input.x + password_input.width - self.width - dp(8)
                                     on_release:
                                         password_input.password = not password_input.password
                                         self.icon = "eye-off" if password_input.password else "eye"
 
-                            # --- Botão Login ---
-                            FocusCardButton:
-                                id: login_btn
-                                on_release: root.do_login(email_input.text.strip(), password_input.text)
-                                MDBoxLayout:
-                                    padding: dp(16), 0
-                                    MDLabel:
-                                        text: "Login"
-                                        halign: "center"
-                                        color: 1, 1, 1, 1
-                                        bold: True
+                        # CTA (AZUL)
+                        LoginCtaButton:
+                            id: login_btn
+                            on_release: root.do_login(email_input.text.strip(), password_input.text)
+                            MDButtonText:
+                                text: "Login"
 
-                            DividerWithText:
-                                text: "ou"
+                        # SEPARADOR
+                        MDBoxLayout:
+                            size_hint_y: None
+                            height: dp(8)
+                        DividerWithTextThin:
+                            text: "ou"
 
-                            # --- Sociais ---
+                        # SOCIAIS (pretos, radius 24, ícone à esquerda)
+                        SocialBlackButton:
+                            on_release: app.toast("Google: em breve")
                             MDBoxLayout:
-                                orientation: "vertical"
-                                spacing: dp(12)
-                                size_hint_y: None
-                                height: self.minimum_height
+                                padding: dp(18), 0
+                                spacing: dp(14)
+                                adaptive_height: True
+                                MDIcon:
+                                    icon: "google"
+                                    theme_icon_color: "Custom"
+                                    icon_color: 1, 1, 1, 1
+                                MDLabel:
+                                    text: "Continue com o Google"
+                                    halign: "center"
+                                    color: 1, 1, 1, 1
+                                    bold: True
+                        SocialBlackButton:
+                            on_release: app.toast("Facebook: em breve")
+                            MDBoxLayout:
+                                padding: dp(18), 0
+                                spacing: dp(14)
+                                adaptive_height: True
+                                MDIcon:
+                                    icon: "facebook"
+                                    theme_icon_color: "Custom"
+                                    icon_color: 1, 1, 1, 1
+                                MDLabel:
+                                    text: "Continue com o Facebook"
+                                    halign: "center"
+                                    color: 1, 1, 1, 1
+                                    bold: True
+                        SocialBlackButton:
+                            on_release: app.toast("Apple: em breve")
+                            MDBoxLayout:
+                                padding: dp(18), 0
+                                spacing: dp(14)
+                                adaptive_height: True
+                                MDIcon:
+                                    icon: "apple"
+                                    theme_icon_color: "Custom"
+                                    icon_color: 1, 1, 1, 1
+                                MDLabel:
+                                    text: "Continue com a Apple"
+                                    halign: "center"
+                                    color: 1, 1, 1, 1
+                                    bold: True
 
-                                MDCard:
-                                    size_hint_y: None
-                                    size_hint_x: 1
-                                    height: dp(56)
-                                    radius: [16, 16, 16, 16]
-                                    md_bg_color: 0.07, 0.07, 0.07, 1
-                                    ripple_behavior: True
-                                    on_release: app.toast("Google: em breve (UI)")
-                                    MDBoxLayout:
-                                        padding: dp(16), 0
-                                        MDLabel:
-                                            text: "Continue com o Google"
-                                            halign: "center"
-                                            color: 1, 1, 1, 1
-                                            bold: True
-
-                                MDCard:
-                                    size_hint_y: None
-                                    size_hint_x: 1
-                                    height: dp(56)
-                                    radius: [16, 16, 16, 16]
-                                    md_bg_color: 0.07, 0.07, 0.07, 1
-                                    ripple_behavior: True
-                                    on_release: app.toast("Facebook: em breve (UI)")
-                                    MDBoxLayout:
-                                        padding: dp(16), 0
-                                        MDLabel:
-                                            text: "Continue com o Facebook"
-                                            halign: "center"
-                                            color: 1, 1, 1, 1
-                                            bold: True
-
-                                MDCard:
-                                    size_hint_y: None
-                                    size_hint_x: 1
-                                    height: dp(56)
-                                    radius: [16, 16, 16, 16]
-                                    md_bg_color: 0.07, 0.07, 0.07, 1
-                                    ripple_behavior: True
-                                    on_release: app.toast("Apple: em breve (UI)")
-                                    MDBoxLayout:
-                                        padding: dp(16), 0
-                                        MDLabel:
-                                            text: "Continue com a Apple"
-                                            halign: "center"
-                                            color: 1, 1, 1, 1
-                                            bold: True
-
-                            MDLabel:
-                                size_hint_y: None
-                                height: dp(8)
-
-                            AnchorLayout:
-                                size_hint_y: None
-                                height: dp(40)
-                                anchor_x: "center"
-
-                                MDTextButton:
-                                    text: "Cadastrar"
+                        # LINK “CADASTRAR”
+                        MDBoxLayout:
+                            size_hint_y: None
+                            height: dp(10)
+                        AnchorLayout:
+                            size_hint_y: None
+                            height: dp(30)
+                            anchor_x: "center"
+                            MDButton:
+                                style: "text"
+                                on_release: app.root.current = "signup"                                
+                                MDButton:
+                                    style: "text"
                                     theme_text_color: "Custom"
-                                    text_color: 0.117, 0.227, 0.996, 1
+                                    text_color: app.theme_cls.primaryColor
                                     on_release: app.root.current = "signup"
-
+                                    MDButtonText:
+                                        text: "Cadastrar"
 
 
 # -----------------------------
@@ -233,24 +199,20 @@
         AuthTextField:
             id: signup_email_input
             hint_text: "E-mail"
-            icon_right: "email-outline"
             focus_next: signup_password_input
             on_text_validate: signup_password_input.focus = True
+            MDTextFieldTrailingIcon:
+                icon: "email-outline"
 
         # --- Campo Senha com "olho" ---
         MDRelativeLayout:
             size_hint_y: None
-            height: dp(68)
+            height: dp(56)
 
-            MDTextField:
+            JogamosTextField:
                 id: signup_password_input
                 hint_text: "Senha"
-                mode: "rectangle"
-                multiline: False
-                write_tab: False
                 password: True
-                size_hint_y: None
-                height: dp(68)
                 pos_hint: {"center_y": 0.5}
                 focus_next: signup_confirm_input
                 focus_previous: signup_email_input
@@ -261,7 +223,7 @@
                 icon: "eye-off" if signup_password_input.password else "eye"
                 pos_hint: {"center_y": 0.5}
                 theme_icon_color: "Custom"
-                icon_color: app.theme_cls.primary_color
+                icon_color: app.theme_cls.primaryColor
                 x: signup_password_input.x + signup_password_input.width - self.width - dp(8)
                 on_release:
                     signup_password_input.password = not signup_password_input.password
@@ -270,17 +232,12 @@
         # --- Campo Confirmar senha com "olho" ---
         MDRelativeLayout:
             size_hint_y: None
-            height: dp(68)
+            height: dp(56)
 
-            MDTextField:
+            JogamosTextField:
                 id: signup_confirm_input
                 hint_text: "Confirmar senha"
-                mode: "rectangle"
-                multiline: False
-                write_tab: False
                 password: True
-                size_hint_y: None
-                height: dp(68)
                 pos_hint: {"center_y": 0.5}
                 focus_next: signup_create_btn
                 focus_previous: signup_password_input
@@ -291,24 +248,26 @@
                 icon: "eye-off" if signup_confirm_input.password else "eye"
                 pos_hint: {"center_y": 0.5}
                 theme_icon_color: "Custom"
-                icon_color: app.theme_cls.primary_color
+                icon_color: app.theme_cls.primaryColor
                 x: signup_confirm_input.x + signup_confirm_input.width - self.width - dp(8)
                 on_release:
                     signup_confirm_input.password = not signup_confirm_input.password
                     self.icon = "eye-off" if signup_confirm_input.password else "eye"
 
-        # Botão focável
+        # Botão focável (MDButton estilizado no theme.kv)
         FocusPrimaryButton:
             id: signup_create_btn
-            text: "Criar conta"
             on_release: root.create_account(signup_email_input.text.strip(), signup_password_input.text, signup_confirm_input.text)
+            MDButtonText:
+                text: "Criar conta"
 
-        MDTextButton:
-            text: "Já tenho conta — voltar ao login"
-            halign: "center"
-            theme_text_color: "Custom"
-            text_color: app.theme_cls.primary_color
+        MDButton:
+            style: "text"
             on_release: app.root.current = "login"
+            MDButtonText:
+                text: "Já tenho conta — voltar ao login"
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primaryColor
 
 
 # -----------------------------
@@ -331,22 +290,24 @@
         AuthTextField:
             id: forgot_email_input
             hint_text: "E-mail cadastrado"
-            icon_right: "email-outline"
             focus_next: forgot_send_btn
             on_text_validate: forgot_send_btn.focus = True
+            MDTextFieldTrailingIcon:
+                icon: "email-outline"
 
-        # Botão focável
         FocusPrimaryButton:
             id: forgot_send_btn
-            text: "Enviar"
             on_release: root.send_reset(forgot_email_input.text.strip())
+            MDButtonText:
+                text: "Enviar"
 
-        MDTextButton:
-            text: "Voltar ao login"
-            halign: "center"
-            theme_text_color: "Custom"
-            text_color: app.theme_cls.primary_color
+        MDButton:
+            style: "text"
             on_release: app.root.current = "login"
+            MDButtonText:
+                text: "Voltar ao login"
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primaryColor
 
 
 # -----------------------------
@@ -369,29 +330,36 @@
         AuthTextField:
             id: token_input
             hint_text: "Token recebido por e-mail"
-            icon_right: "numeric"
             focus_next: verify_btn
             on_text_validate: root.verify_token(token_input.text.strip())
+            MDTextFieldTrailingIcon:
+                icon: "numeric"
 
-        # Botão focável
         FocusPrimaryButton:
             id: verify_btn
-            text: "Validar token"
             on_release: root.verify_token(token_input.text.strip())
+            MDButtonText:
+                text: "Validar token"
 
         MDBoxLayout:
             size_hint_y: None
             height: dp(40)
             spacing: dp(8)
             MDWidget:
-            MDTextButton:
-                text: "Reenviar token"
+            MDButton:
+                style: "text"
                 theme_text_color: "Custom"
-                text_color: app.theme_cls.primary_color
+                text_color: app.theme_cls.primaryColor
                 on_release: root.resend_token()
-            MDTextButton:
-                text: "Voltar ao login"
-                theme_text_color: "Custom"
-                text_color: app.theme_cls.primary_color
-                on_release: app.root.current = "login"
+                MDButtonText:
+                    text: "Reenviar token"
+            
+                MDButton:
+                    style: "text"
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primaryColor
+                    on_release: app.root.current = "login"
+                    MDButtonText:
+                        text: "Voltar ao login"
+
             MDWidget:

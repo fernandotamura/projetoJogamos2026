@@ -66,7 +66,7 @@
             MDLabel:
                 text: "05"
                 color: 1, 1, 1, 1
-                font_style: "H4"
+                font_style: "Title" #estilos MD3: Display, Headline, Title, Body, Label
                 size_hint_y: None
                 height: self.texture_size[1]
 
@@ -76,7 +76,7 @@
                 font_size: "12sp"
 
         # Divisor vertical no meio
-        MDSeparator:
+        MDDivider:
             orientation: "vertical"
             size_hint_x: None
             width: dp(1)
@@ -102,8 +102,10 @@
 
             MDLabel:
                 text: "04/05"
+                theme_text_color: "Custom"
                 color: 1, 1, 1, 1
-                font_style: "H6"
+                font_style: "Title"  # estilos MD3: Display, Headline, Title, Body, Label
+                role: "medium" # roles: large | medium | small
                 size_hint_y: None
                 height: self.texture_size[1]
             MDLabel:
@@ -113,7 +115,7 @@
             MDBoxLayout:
                 size_hint_y: None
                 height: dp(8)
-                MDProgressBar:
+                MDLinearProgressIndicator:
                     value: 80
                     color: 1, 1, 1, 1
                     back_color: 1,1,1,.25
@@ -141,7 +143,7 @@
 
             MDLabel:
                 text: "Os Titans"
-                font_style: "H5"
+                font_style: "Title" #estilos MD3: Display, Headline, Title, Body, Label
                 halign: "left"
                 valign: "middle"
 
@@ -289,7 +291,7 @@
                                 halign: "left"
                             MDLabel:
                                 text: root.user_name
-                                font_style: "H4"
+                                font_style: "Title" #estilos MD3: Display, Headline, Title, Body, Label
                                 bold: True
                                 halign: "left"
 
@@ -311,7 +313,7 @@
                 # Título "Esportes"
                 MDLabel:
                     text: "Esportes"
-                    font_style: "H6"
+                    font_style: "Title" #estilos MD3: Display, Headline, Title, Body, Label
                     size_hint_y: None
                     height: self.texture_size[1]
 
@@ -367,7 +369,7 @@
                 # Título "Eventos"
                 MDLabel:
                     text: "Eventos"
-                    font_style: "H6"
+                    font_style: "Title" #estilos MD3: Display, Headline, Title, Body, Label
                     size_hint_y: None
                     height: self.texture_size[1]
 
@@ -415,7 +417,7 @@
                     on_release: app.toast("Mais (UI)")
 
         # FAB central (azul)
-        MDFloatingActionButton:
+        MDFabButton:
             icon: "plus"
             md_bg_color: 0.117, 0.227, 0.996, 1
             pos_hint: {"center_x": 0.5, "y": 0.05}

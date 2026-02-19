@@ -1,5 +1,6 @@
 from kivy.uix.screenmanager import Screen
-from kivymd.toast import toast
+#from kivymd.toast import toast
+from kivy.app import App
 from components.checkbox_item import MDCheckboxItem
 
 class EsportesScreen(Screen):
@@ -38,6 +39,8 @@ class EsportesScreen(Screen):
         for nome, icone in esportes:
             self.ids.lista_esportes.add_widget(MDCheckboxItem(text=nome, icon_path=icone))
 
+            App.get_running_app().toast("mensagem")        
+
     def confirmar_escolhas(self):
         selecionados = []
         for item in self.ids.lista_esportes.children:
@@ -48,4 +51,3 @@ class EsportesScreen(Screen):
         else:
             toast(f"Selecionados: {', '.join(selecionados)}")
             self.manager.current = "home"
-

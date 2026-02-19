@@ -1,69 +1,73 @@
-from kivy.properties import ListProperty
-from kivymd.uix.screen import MDScreen
+# screens/esportes.py
+from kivy.uix.screenmanager import Screen
+from kivy.app import App
+from kivy.clock import Clock
+from components.checkbox_item import MDCheckboxItem
 
-class ChooseSportsScreen(MDScreen):
-    selected = ListProperty([])
 
-    def toggle(self, key: str):
-        if key in self.selected:
-            self.selected.remove(key)
-        else:
-            if len(self.selected) >= 3:
-                app = self._app()
-                if hasattr(app, "toast"):
-                    app.toast("Selecione no máximo 3 esportes.")
-                return
-            self.selected.append(key)
+class ChooseSportsScreen(Screen):
+    def on_pre_enter(self, *args):
 
-        self.update_ui()
+        """
+        Chamado antes da tela entrar.
+        Aqui limpamos e repovoamos a lista de esportes.
+        """
+        esportes = [
+            ("Futebol", "assets/icons/futebol.png"),
+            ("Vôlei", "assets/icons/volei.png"),
+            ("Basquete", "assets/icons/basquete.png"),
+            ("Tênis", "assets/icons/tenis.png"),
+            ("Natação", "assets/icons/natacao.png"),
+            ("Corrida", "assets/icons/corrida.png"),
+            ("Caminhada", "assets/icons/caminhada.png"),
+            ("Skate", "assets/icons/skate.png"),
+            ("BMX", "assets/icons/bmx.png"),
+            ("Badminton", "assets/icons/badminton.png"),
+            ("Jiu-Jitsu", "assets/icons/jiujitsu.png"),
+            ("Judô", "assets/icons/judo.png"),
+            ("Karatê", "assets/icons/karate.png"),
+            ("Boxe", "assets/icons/boxe.png"),
+            ("Muay Thai", "assets/icons/muaythai.png"),
+            ("Yoga", "assets/icons/yoga.png"),
+            ("Pilates", "assets/icons/pilates.png"),
+            ("Crossfit", "assets/icons/crossfit.png"),
+            ("Ciclismo", "assets/icons/ciclismo.png"),
+            ("Surf", "assets/icons/surf.png"),
+            ("Escalada", "assets/icons/escalada.png"),
+            ("Rugby", "assets/icons/rugby.png"),
+            ("Beisebol", "assets/icons/beisebol.png"),
+            ("Handebol", "assets/icons/handebol.png"),
+            ("Tênis de mesa", "assets/icons/tenisdemesa.png"),
+            ("Golfe", "assets/icons/golfe.png"),
+            ("Hóquei", "assets/icons/hoquei.png"),
+            ("Esgrima", "assets/icons/esgrima.png"),
+        ]
 
-    def update_ui(self):
-        # Atualiza os cards (se estiverem definidos por ids)
-        for k in ["badminton", "basquete", "bmx", "caminhada", "corrida"]:
-            cid = f"card_{k}"
-            if cid in self.ids:
-                self.ids[cid].is_selected = (k in self.selected)
-
-        # Botão só habilita com 3
-        if "btn_done" in self.ids:
-            self.ids.btn_done.disabled = (len(self.selected) != 3)
-
-    def finish(self):
-        if len(self.selected) != 3:
-            app = self._app()
-            if hasattr(app, "toast"):
-                app.toast("Escolha exatamente 3 esportes.")
+        # Garante que o id existe (caso o KV mude)        
+        lista = getattr(self.ids, "lista_esportes", None)
+        if not lista:
+            App.get_running_app().toast("Erro: container 'lista_esportes' não encontrado.")
             return
 
-        app = self._app()
-        if hasattr(app, "toast"):
-            app.toast("Tudo pronto!")
-        # Aqui depois conectamos com backend (/user/favorites)
-        # e depois podemos navegar para outra página, se quiser:
-        # self.manager.current = "dashboard"
+        lista.clear_widgets()
+        for nome, icone in esportes:
+            lista.add_widget(MDCheckboxItem(text=nome, icon_path=icone))
 
-    def on_pre_enter(self, *args):
-        self.update_ui()
+        Clock.schedule_once(lambda *_: App.get_running_app().toast("Selecione pelo menos 3 esportes"), 0)
 
-    def _app(self):
-        from kivy.app import App
-        return App.get_running_app()
-    
-    def go_back(self):
-        """
-        Volta para a página inicial do Shell (dashboard).
-        Como ChooseSportsScreen está dentro do MDScreenManager do shell.kv,
-        self.manager é esse ScreenManager interno.
-        """
-        if self.manager:
-            self.manager.current = "dashboard"
+    def confirmar_escolhas(self):
+        lista = getattr(self.ids, "lista_esportes", None)
+        if not lista:
+            App.get_running_app().toast("Erro: container 'lista_esportes' não encontrado.")
+            return
 
-    def open_drawer(self):
-        """
-        Abre o menu hamburger (drawer) do Shell.
-        O drawer fica no AppShellScreen (screen 'shell' do ScreenManager principal).
-        """
-        from kivy.app import App
-        app = App.get_running_app()
-        shell = app.root.get_screen("shell")  # ScreenManager principal → screen 'shell'
-        shell.open_drawer()
+        selecionados = []
+        for item in lista.children:
+            if hasattr(item, "active") and item.active:
+                selecionados.append(item.text)
+
+        if len(selecionados) < 3:
+            App.get_running_app().toast("Escolha pelo menos 3 esportes")
+        else:
+            App.get_running_app().toast(f"Selecionados: {', '.join(selecionados)}")
+            self.manager.current = "home"
